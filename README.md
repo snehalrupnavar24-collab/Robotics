@@ -1,5 +1,18 @@
 # Smart Pothole Detection and Warning Robot (Webots)
 
+> ### 🌐 Live Online Demo Link: [https://snehalrupnavar24-collab.github.io/Robotics/](https://snehalrupnavar24-collab.github.io/Robotics/)
+> **Interactive Showcase**: Open the link above in any browser (mobile, laptop, or desktop) to test the live simulation, audible warning buzzer, dual LEDs, rear LCD screen, and OpenCV vision pipeline with zero installation.
+
+---
+
+### 🔍 Quick Guide: How to View the Project
+* **Option 1 (Instant Online Demo for Faculty)**: Click **[Live Project Showcase](https://snehalrupnavar24-collab.github.io/Robotics/)**.
+* **Option 2 (Local Offline Dashboard)**: Double-click **`1_Open_Simulation_Dashboard.bat`** (or open [`index.html`](index.html)) in Chrome/Edge.
+* **Option 3 (Webots 3D Simulator)**: Open [`worlds/pothole_road.wbt`](worlds/pothole_road.wbt) inside Webots.
+* **Option 4 (Run All Tests)**: Double-click **`3_Run_Automated_Tests.bat`** to execute all 13 unit tests.
+
+---
+
 An academic, software-only autonomous robotics simulation project for **Webots** using the official Python Controller API. The system autonomously navigates a two-lane roadway in ENU coordinates, detects physical road recesses using dual detection pipelines (Ground-Truth Simulation and OpenCV Computer Vision), triggers multi-modal warning signals (dual LEDs, acoustic buzzer, and rear LCD texture), safely immobilizes the vehicle before hazards, and supports interactive keyboard and automated resumption.
 
 ---
