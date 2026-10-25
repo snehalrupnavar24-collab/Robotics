@@ -1,0 +1,6 @@
+test_case_id,test_case_name,status,details
+1,Clear road driving,NOT RUN,No data found
+2,Pothole detected & safe stop,NOT RUN,No data found
+3,Multiple potholes & no duplicates,NOT RUN,No data found
+4,Reset / resume functionality,NOT RUN,No data found
+5,Detection disabled fail-safe,PASS,Fail-safe engaged: vehicle immobilized and DETECTION_UNAVAILABLE logged

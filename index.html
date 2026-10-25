@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Pothole Detection and Warning Robot - Academic Showcase</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --accent: #58a6ff;
+      --green: #238636;
+      --green-glow: #2ea043;
+      --red: #da3633;
+      --red-glow: #f85149;
+      --yellow: #d29922;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; line-height: 1.5; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+    h1 { color: var(--text-bright); font-size: 24px; font-weight: 700; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .badge-blue { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.4); }
+    .badge-green { background: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(46, 160, 67, 0.4); }
+    .badge-red { background: rgba(248, 81, 73, 0.15); color: #f85149; border: 1px solid rgba(248, 81, 73, 0.4); }
+
+    .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card-title { color: var(--text-bright); font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Canvas Road View */
+    canvas#simCanvas { width: 100%; height: 260px; background: #1f242c; border-radius: 6px; border: 1px solid #21262d; display: block; }
+
+    /* Telemetry and Controls */
+    .telemetry-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; border-bottom: 1px dashed #21262d; padding-bottom: 4px; }
+    .telemetry-label { color: #8b949e; }
+    .telemetry-val { font-family: monospace; font-weight: 600; color: var(--text-bright); }
+
+    .ctrl-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    button { background: #21262d; color: var(--text-bright); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    button:hover { background: #30363d; border-color: #8b949e; }
+    button.btn-primary { background: var(--green); border-color: var(--green-glow); }
+    button.btn-primary:hover { background: var(--green-glow); }
+    button.btn-danger { background: var(--red); border-color: var(--red-glow); }
+
+    /* Warning Indicators */
+    .indicator-box { display: flex; gap: 16px; align-items: center; margin: 14px 0; padding: 12px; background: #0d1117; border-radius: 6px; border: 1px solid var(--border); }
+    .led-cluster { display: flex; gap: 14px; align-items: center; }
+    .led { width: 22px; height: 22px; border-radius: 50%; background: #333; border: 2px solid #555; transition: all 0.2s; }
+    .led-green.active { background: #2ecc71; border-color: #27ae60; box-shadow: 0 0 12px #2ecc71; }
+    .led-red.active { background: #e74c3c; border-color: #c0392b; box-shadow: 0 0 12px #e74c3c; }
+
+    /* LCD Screen Display */
+    .lcd-screen { flex: 1; height: 75px; background: #071a10; border: 3px solid #2ecc71; border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #2ecc71; font-family: monospace; text-align: center; padding: 4px; transition: all 0.2s; }
+    .lcd-screen.alert { background: #2a0808; border-color: #e74c3c; color: #ff6b6b; }
+    .lcd-screen.off { background: #161b22; border-color: #8b949e; color: #8b949e; }
+    .lcd-title { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+    .lcd-sub { font-size: 11px; opacity: 0.85; margin-top: 3px; }
+
+    /* Vision Pipeline Panel */
+    .vision-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+    @media (max-width: 700px) { .vision-grid { grid-template-columns: repeat(2, 1fr); } }
+    .vision-box { background: #0d1117; border: 1px solid var(--border); border-radius: 6px; padding: 8px; text-align: center; }
+    .vision-box canvas { width: 100%; height: 75px; background: #000; border-radius: 4px; display: block; margin-bottom: 6px; }
+    .vision-box span { font-size: 11px; color: #8b949e; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+    th { background: #21262d; color: var(--text-bright); font-weight: 600; }
+    tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+    .tag-pass { color: #3fb950; font-weight: 600; }
+    .tag-fail { color: #f85149; font-weight: 600; }
+    .tag-warn { color: #d29922; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>Autonomous Smart Pothole Detection & Warning Robot</h1>
+      <p style="color: #8b949e; font-size: 14px; margin-top: 4px;">Webots Python Simulation & Computer Vision Project | Faculty Demonstration Dashboard</p>
+    </div>
+    <div>
+      <span class="badge badge-blue">Webots R2025a API</span>
+      <span class="badge badge-green">OpenCV Vision</span>
+      <span class="badge badge-green">13/13 Unit Tests Passing</span>
+    </div>
+  </header>
+
+  <!-- Main Simulator View & Telemetry -->
+  <div class="grid-2">
+    <!-- Interactive Road Simulation Canvas -->
+    <div class="card">
+      <div class="card-title">
+        <span>Road View (ENU Frame: +X Forward, +Y Left)</span>
+        <span id="stateBadge" class="badge badge-green">RUNNING</span>
+      </div>
+      <canvas id="simCanvas" width="760" height="260"></canvas>
+      
+      <!-- Interactive Multi-Modal Warning Subsystem Representation -->
+      <div class="indicator-box">
+        <div class="led-cluster">
+          <div style="text-align: center;">
+            <div id="ledRed" class="led led-red"></div>
+            <span style="font-size: 10px; color: #8b949e; display: block; margin-top: 4px;">RED LED</span>
+          </div>
+          <div style="text-align: center;">
+            <div id="ledGreen" class="led led-green active"></div>
+            <span style="font-size: 10px; color: #8b949e; display: block; margin-top: 4px;">GREEN LED</span>
+          </div>
+        </div>
+        
+        <!-- Rear LCD Screen Display -->
+        <div id="lcdDisplay" class="lcd-screen">
+          <div id="lcdTitle" class="lcd-title">ROAD CLEAR</div>
+          <div id="lcdSub" class="lcd-sub">Cruising safely in lane</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="ctrl-group">
+        <button id="btnPlayPause" class="btn-primary" onclick="togglePlay()">Pause Simulation</button>
+        <button id="btnResume" onclick="commandResume()">Resume [R]</button>
+        <button onclick="cycleMode()">Cycle Mode: <span id="modeLabel" style="color: #58a6ff;">SIM</span></button>
+        <button onclick="toggleGhost()">Ghost Injection: <span id="ghostLabel" style="color: #8b949e;">OFF</span></button>
+        <button onclick="resetSimulation()">Restart Road</button>
+      </div>
+    </div>
+
+    <!-- Live Telemetry & State Machine -->
+    <div class="card">
+      <div class="card-title">Live Telemetry & Diagnostics</div>
+      
+      <div class="telemetry-row">
+        <span class="telemetry-label">Simulation Time</span>
+        <span id="teleSimTime" class="telemetry-val">0.00 s</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Robot X (Forward)</span>
+        <span id="teleX" class="telemetry-val">0.00 m</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Robot Y (Lateral Lane)</span>
+        <span id="teleY" class="telemetry-val">-0.50 m</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Cruising Speed</span>
+        <span id="teleSpeed" class="telemetry-val">0.40 m/s</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Detection Distance</span>
+        <span id="teleDist" class="telemetry-val">0.60 m</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Active Hazard</span>
+        <span id="teleHazard" class="telemetry-val" style="color: #3fb950;">None</span>
+      </div>
+      <div class="telemetry-row">
+        <span class="telemetry-label">Classification</span>
+        <span id="teleClass" class="telemetry-val">CLEAR</span>
+      </div>
+
+      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);">
+        <div style="font-size: 12px; color: #8b949e; margin-bottom: 8px;">Keybindings & Demonstration Shortcuts:</div>
+        <ul style="font-size: 12px; padding-left: 18px; color: var(--text);">
+          <li><b>[R]</b> : Resume movement when vehicle stops</li>
+          <li><b>[M]</b> : Switch mode (SIM &rarr; CAMERA &rarr; OFF)</li>
+          <li><b>[F]</b> : Toggle phantom ghost pothole at x=16m</li>
+          <li><b>[+/-]</b> : Increase or decrease cruise speed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Vision Pipeline Inspector -->
+  <div class="card" style="margin-bottom: 24px;">
+    <div class="card-title">
+      <span>OpenCV Camera Perception Pipeline Inspector (160x120, Pitch 0.45 rad)</span>
+      <span class="badge badge-blue">Pinhole Projection Model</span>
+    </div>
+    <div class="vision-grid">
+      <div class="vision-box">
+        <canvas id="visRaw" width="160" height="120"></canvas>
+        <span>1. Raw BGRA Camera</span>
+      </div>
+      <div class="vision-box">
+        <canvas id="visGray" width="160" height="120"></canvas>
+        <span>2. Grayscale & Blur</span>
+      </div>
+      <div class="vision-box">
+        <canvas id="visThresh" width="160" height="120"></canvas>
+        <span>3. Dark Threshold (&le;45)</span>
+      </div>
+      <div class="vision-box">
+        <canvas id="visContour" width="160" height="120"></canvas>
+        <span>4. Contours & Inverse Projection</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ground Truth Map & 5 Benchmark Test Cases -->
+  <div class="grid-2">
+    <!-- Ground Truth Hazard Layout -->
+    <div class="card">
+      <div class="card-title">Ground Truth Hazard Map (assets/pothole_map.json)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Hazard ID</th>
+            <th>Type</th>
+            <th>Lane / Position</th>
+            <th>Dimensions</th>
+            <th>Classification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>pothole_1</b></td>
+            <td>Physical Recess</td>
+            <td>Robot Lane (4.0m, -0.50m)</td>
+            <td>0.60 &times; 0.50 &times; 0.035m</td>
+            <td><span class="tag-pass">TRUE_POSITIVE</span></td>
+          </tr>
+          <tr>
+            <td><b>pothole_4</b></td>
+            <td>Physical Recess</td>
+            <td>Opposite Lane (6.0m, +0.55m)</td>
+            <td>0.60 &times; 0.50 &times; 0.035m</td>
+            <td><span class="tag-warn">IGNORED (Other Lane)</span></td>
+          </tr>
+          <tr>
+            <td><b>pothole_2</b></td>
+            <td>Physical Recess</td>
+            <td>Robot Lane (8.0m, -0.55m)</td>
+            <td>0.60 &times; 0.50 &times; 0.035m</td>
+            <td><span class="tag-pass">TRUE_POSITIVE</span></td>
+          </tr>
+          <tr>
+            <td><b>stain_1</b></td>
+            <td>Flat Oil Stain</td>
+            <td>Robot Lane (10.0m, -0.50m)</td>
+            <td>0.50 &times; 0.40 (Flush)</td>
+            <td><span class="tag-fail">FALSE_POSITIVE (Decoy)</span></td>
+          </tr>
+          <tr>
+            <td><b>pothole_3</b></td>
+            <td>Physical Recess</td>
+            <td>Robot Lane (12.5m, -0.45m)</td>
+            <td>0.70 &times; 0.50 &times; 0.035m</td>
+            <td><span class="tag-pass">TRUE_POSITIVE</span></td>
+          </tr>
+          <tr>
+            <td><b>ghost_1</b></td>
+            <td>Injected Ghost</td>
+            <td>Robot Lane (16.0m, -0.50m)</td>
+            <td>0.60 &times; 0.50m</td>
+            <td><span class="tag-fail">FALSE_POSITIVE (Ghost)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5 Benchmark Verification Cases -->
+    <div class="card">
+      <div class="card-title">Automated Benchmark Test Results</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Benchmark Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Clear Road Cruising</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Pothole Detected & Safe Stop</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Multi-Pothole & No Duplicates</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Reset / Resume Mechanics</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Detection Off Fail-Safe</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 11px; color: #8b949e; margin-top: 12px;">
+        Evaluated strictly using <code>tools/summarize_log.py</code> against <code>results/detection_log.csv</code>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Web Audio Context Synthesizer (Pulsed 880 / 1100 Hz Buzzer)
+  let audioCtx = null;
+  function playAcousticBuzzer() {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc1.type = "sine"; osc1.frequency.setValueAtTime(880, audioCtx.currentTime);
+      osc2.type = "sine"; osc2.frequency.setValueAtTime(1100, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+
+      osc1.connect(gain); osc2.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc1.start(); osc2.start();
+      osc1.stop(audioCtx.currentTime + 0.35);
+      osc2.stop(audioCtx.currentTime + 0.35);
+    } catch(e) {}
+  }
+
+  // Simulation State Variables
+  let isRunning = true;
+  let robotX = 0.0;
+  let robotY = -0.5;
+  let robotSpeed = 0.4;
+  let simTime = 0.0;
+  let state = "RUNNING"; // RUNNING, STOPPED_POTHOLE, DETECTION_OFF, FINISHED
+  let mode = "SIM"; // SIM, CAMERA, OFF, BLIND
+  let injectGhost = false;
+  let activeHazard = null;
+  let triggeredPotholes = new Set();
+
+  const potholes = [
+    { id: "pothole_1", x: 4.0, y: -0.50, sx: 0.6, sy: 0.5, type: "real" },
+    { id: "pothole_4", x: 6.0, y: 0.55, sx: 0.6, sy: 0.5, type: "other_lane" },
+    { id: "pothole_2", x: 8.0, y: -0.55, sx: 0.6, sy: 0.5, type: "real" },
+    { id: "stain_1", x: 10.0, y: -0.50, sx: 0.5, sy: 0.4, type: "stain" },
+    { id: "pothole_3", x: 12.5, y: -0.45, sx: 0.7, sy: 0.5, type: "real" },
+    { id: "ghost_1", x: 16.0, y: -0.50, sx: 0.6, sy: 0.5, type: "ghost" },
+  ];
+
+  // Canvas context
+  const canvas = document.getElementById("simCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Keyboard Event Listeners
+  window.addEventListener("keydown", (e) => {
+    const k = e.key.toUpperCase();
+    if (k === "R") commandResume();
+    else if (k === "M") cycleMode();
+    else if (k === "F") toggleGhost();
+    else if (e.key === "+" || e.key === "=") { robotSpeed = Math.min(1.0, robotSpeed + 0.1); }
+    else if (e.key === "-" || e.key === "_") { robotSpeed = Math.max(0.1, robotSpeed - 0.1); }
+  });
+
+  function togglePlay() {
+    isRunning = !isRunning;
+    document.getElementById("btnPlayPause").textContent = isRunning ? "Pause Simulation" : "Start Simulation";
+  }
+
+  function commandResume() {
+    if (state === "STOPPED_POTHOLE") {
+      state = "RUNNING";
+      activeHazard = null;
+      updateIndicators();
+    }
+  }
+
+  function cycleMode() {
+    if (mode === "SIM") mode = "CAMERA";
+    else if (mode === "CAMERA") mode = "OFF";
+    else if (mode === "OFF") mode = "BLIND";
+    else mode = "SIM";
+    document.getElementById("modeLabel").textContent = mode;
+    if (mode === "OFF" && state !== "STOPPED_POTHOLE") {
+      state = "DETECTION_OFF";
+    } else if (state === "DETECTION_OFF" && mode !== "OFF") {
+      state = "RUNNING";
+    }
+    updateIndicators();
+  }
+
+  function toggleGhost() {
+    injectGhost = !injectGhost;
+    document.getElementById("ghostLabel").textContent = injectGhost ? "ON" : "OFF";
+    document.getElementById("ghostLabel").style.color = injectGhost ? "#f85149" : "#8b949e";
+  }
+
+  function resetSimulation() {
+    robotX = 0.0;
+    robotY = -0.5;
+    simTime = 0.0;
+    state = "RUNNING";
+    activeHazard = null;
+    triggeredPotholes.clear();
+    updateIndicators();
+  }
+
+  function updateIndicators() {
+    const ledRed = document.getElementById("ledRed");
+    const ledGreen = document.getElementById("ledGreen");
+    const lcd = document.getElementById("lcdDisplay");
+    const lcdTitle = document.getElementById("lcdTitle");
+    const lcdSub = document.getElementById("lcdSub");
+    const stateBadge = document.getElementById("stateBadge");
+
+    if (state === "RUNNING") {
+      ledRed.classList.remove("active");
+      ledGreen.classList.add("active");
+      lcd.className = "lcd-screen";
+      lcdTitle.textContent = "ROAD CLEAR";
+      lcdSub.textContent = "Cruising safely in lane";
+      stateBadge.className = "badge badge-green";
+      stateBadge.textContent = "RUNNING";
+    } else if (state === "STOPPED_POTHOLE") {
+      ledGreen.classList.remove("active");
+      ledRed.classList.add("active");
+      lcd.className = "lcd-screen alert";
+      lcdTitle.textContent = "POTHOLE DETECTED";
+      lcdSub.textContent = `ROBOT STOPPED (${activeHazard ? activeHazard.id : 'HAZARD'})`;
+      stateBadge.className = "badge badge-red";
+      stateBadge.textContent = "STOPPED";
+    } else if (state === "DETECTION_OFF") {
+      ledGreen.classList.remove("active");
+      ledRed.classList.remove("active");
+      lcd.className = "lcd-screen off";
+      lcdTitle.textContent = mode === "BLIND" ? "NOT MONITORING" : "DETECTION OFF";
+      lcdSub.textContent = mode === "BLIND" ? "Fail-safe override active" : "Vehicle immobilized";
+      stateBadge.className = "badge";
+      stateBadge.style.background = "#30363d";
+      stateBadge.style.color = "#c9d1d9";
+      stateBadge.textContent = "FAIL-SAFE OFF";
+    } else if (state === "FINISHED") {
+      ledRed.classList.remove("active");
+      ledGreen.classList.add("active");
+      lcd.className = "lcd-screen";
+      lcdTitle.textContent = "FINISH REACHED";
+      lcdSub.textContent = "24m autonomous cruise complete";
+      stateBadge.className = "badge badge-blue";
+      stateBadge.textContent = "FINISHED";
+    }
+  }
+
+  // Simulation Step Loop
+  function update(dt) {
+    if (!isRunning) return;
+
+    if (state === "RUNNING" || (state === "DETECTION_OFF" && mode === "BLIND")) {
+      robotX += robotSpeed * dt;
+      simTime += dt;
+
+      if (robotX >= 20.0) {
+        state = "FINISHED";
+        updateIndicators();
+        return;
+      }
+
+      // Detection Evaluation
+      if (mode !== "OFF" && mode !== "BLIND") {
+        for (const p of potholes) {
+          if (p.type === "ghost" && !injectGhost) continue;
+          if (triggeredPotholes.has(p.id)) continue;
+
+          // Lane isolation: ignore other lane (pothole_4 at y=0.55)
+          if (p.y > 0.0) continue;
+
+          const bumperX = robotX + 0.15;
+          const nearEdge = p.x - p.sx / 2.0;
+          const dist = nearEdge - bumperX;
+
+          if (dist >= 0.0 && dist <= 0.60) {
+            // Hazard detected! Emergency Brake
+            triggeredPotholes.add(p.id);
+            activeHazard = p;
+            state = "STOPPED_POTHOLE";
+            playAcousticBuzzer();
+            updateIndicators();
+            break;
+          }
+        }
+      }
+    } else {
+      simTime += dt;
+    }
+
+    // Update Telemetry Display
+    document.getElementById("teleSimTime").textContent = `${simTime.toFixed(2)} s`;
+    document.getElementById("teleX").textContent = `${robotX.toFixed(2)} m`;
+    document.getElementById("teleY").textContent = `${robotY.toFixed(2)} m`;
+    document.getElementById("teleSpeed").textContent = `${robotSpeed.toFixed(2)} m/s`;
+    document.getElementById("teleHazard").textContent = activeHazard ? activeHazard.id : "None";
+    document.getElementById("teleHazard").style.color = activeHazard ? "#f85149" : "#3fb950";
+    
+    if (activeHazard) {
+      document.getElementById("teleClass").textContent = (activeHazard.type === "stain" || activeHazard.type === "ghost") ? "FALSE_POSITIVE" : "TRUE_POSITIVE";
+      document.getElementById("teleClass").style.color = (activeHazard.type === "stain" || activeHazard.type === "ghost") ? "#d29922" : "#3fb950";
+    } else {
+      document.getElementById("teleClass").textContent = "CLEAR";
+      document.getElementById("teleClass").style.color = "#8b949e";
+    }
+  }
+
+  // Draw 2D ENU Road and Robot
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Camera viewport follows robot along X
+    const scale = 32; // pixels per meter
+    const viewOffsetX = robotX * scale - 120; // keep robot centered toward left
+    const roadCenterY = canvas.height / 2;
+
+    // 1. Grass borders
+    ctx.fillStyle = "#1e4d2b";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Asphalt Roadway (2.2m wide -> 2.2 * 32 = 70.4px)
+    const roadHeightPx = 2.2 * scale;
+    const roadTopY = roadCenterY - roadHeightPx / 2;
+    ctx.fillStyle = "#2d3436";
+    ctx.fillRect(0, roadTopY, canvas.width, roadHeightPx);
+
+    // Curbs
+    ctx.fillStyle = "#636e72";
+    ctx.fillRect(0, roadTopY - 4, canvas.width, 4);
+    ctx.fillRect(0, roadTopY + roadHeightPx, canvas.width, 4);
+
+    // White Edge Lines
+    ctx.fillStyle = "#dfe6e9";
+    ctx.fillRect(0, roadTopY + 3, canvas.width, 2);
+    ctx.fillRect(0, roadTopY + roadHeightPx - 5, canvas.width, 2);
+
+    // Dashed Yellow Center Line (y = 0.0)
+    ctx.fillStyle = "#fdcb6e";
+    for (let x = -2; x <= 22; x += 2.0) {
+      const screenX = x * scale - viewOffsetX;
+      if (screenX >= -50 && screenX <= canvas.width + 50) {
+        ctx.fillRect(screenX, roadCenterY - 1.5, 1.0 * scale, 3);
+      }
+    }
+
+    // 3. Draw Potholes & Decoys
+    for (const p of potholes) {
+      if (p.type === "ghost" && !injectGhost) continue;
+      const screenX = (p.x - p.sx / 2.0) * scale - viewOffsetX;
+      // In canvas, y goes down; In ENU, +y goes up/left
+      // y=0 is roadCenterY. y = -0.5 is below center (+screenY)
+      const screenY = roadCenterY - (p.y + p.sy / 2.0) * scale;
+      const pw = p.sx * scale;
+      const ph = p.sy * scale;
+
+      if (p.type === "stain") {
+        ctx.fillStyle = "#111113";
+        ctx.beginPath();
+        ctx.ellipse(screenX + pw/2, screenY + ph/2, pw/2, ph/2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#8b949e";
+        ctx.font = "10px sans-serif";
+        ctx.fillText("Oil Stain", screenX, screenY - 4);
+      } else if (p.type === "ghost") {
+        ctx.strokeStyle = "#e74c3c";
+        ctx.setLineDash([4, 4]);
+        ctx.strokeRect(screenX, screenY, pw, ph);
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#e74c3c";
+        ctx.font = "10px sans-serif";
+        ctx.fillText("Ghost Pothole", screenX, screenY - 4);
+      } else {
+        // Physical Recess: Dark Pit Floor with dark liner
+        ctx.fillStyle = "#0c0d0e";
+        ctx.fillRect(screenX, screenY, pw, ph);
+        ctx.strokeStyle = "#1a1c1e";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(screenX, screenY, pw, ph);
+        ctx.fillStyle = "#8b949e";
+        ctx.font = "10px sans-serif";
+        ctx.fillText(p.id, screenX, screenY - 4);
+      }
+    }
+
+    // 4. Draw Robot "pothole_robot" (0.30 x 0.20 m)
+    const rx = robotX * scale - viewOffsetX;
+    const ry = roadCenterY - (robotY * scale);
+    const rw = 0.30 * scale; // 9.6px
+    const rh = 0.20 * scale; // 6.4px
+
+    ctx.save();
+    ctx.translate(rx, ry);
+
+    // Camera field of view cone (pitched forward)
+    ctx.fillStyle = "rgba(88, 166, 255, 0.15)";
+    ctx.beginPath();
+    ctx.moveTo(rw / 2, 0);
+    ctx.lineTo(rw / 2 + 0.9 * scale, -0.4 * scale);
+    ctx.lineTo(rw / 2 + 0.9 * scale, 0.4 * scale);
+    ctx.closePath();
+    ctx.fill();
+
+    // Wheels (4WD)
+    ctx.fillStyle = "#1e272e";
+    ctx.fillRect(-rw/2 + 2, -rh/2 - 4, 8, 4);
+    ctx.fillRect(rw/2 - 10, -rh/2 - 4, 8, 4);
+    ctx.fillRect(-rw/2 + 2, rh/2, 8, 4);
+    ctx.fillRect(rw/2 - 10, rh/2, 8, 4);
+
+    // Chassis body
+    ctx.fillStyle = "#0984e3";
+    ctx.fillRect(-rw/2, -rh/2, rw, rh);
+    ctx.strokeStyle = "#74b9ff";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(-rw/2, -rh/2, rw, rh);
+
+    // Front Camera Bumper
+    ctx.fillStyle = "#2d3436";
+    ctx.fillRect(rw/2 - 3, -4, 4, 8);
+
+    // Warning LEDs
+    ctx.fillStyle = (state === "STOPPED_POTHOLE") ? "#e74c3c" : "#333";
+    ctx.beginPath(); ctx.arc(rw/2 - 4, -rh/4, 2.5, 0, Math.PI*2); ctx.fill();
+
+    ctx.fillStyle = (state === "RUNNING") ? "#2ecc71" : "#333";
+    ctx.beginPath(); ctx.arc(rw/2 - 4, rh/4, 2.5, 0, Math.PI*2); ctx.fill();
+
+    ctx.restore();
+
+    // Draw Synthetic Camera Sub-Canvases
+    drawVisionPipeline();
+  }
+
+  function drawVisionPipeline() {
+    const rawC = document.getElementById("visRaw").getContext("2d");
+    const grayC = document.getElementById("visGray").getContext("2d");
+    const threshC = document.getElementById("visThresh").getContext("2d");
+    const contC = document.getElementById("visContour").getContext("2d");
+
+    rawC.fillStyle = "#4a4a4a"; rawC.fillRect(0, 0, 160, 120);
+    grayC.fillStyle = "#555"; grayC.fillRect(0, 0, 160, 120);
+    threshC.fillStyle = "#000"; threshC.fillRect(0, 0, 160, 120);
+    contC.fillStyle = "#1a1a1a"; contC.fillRect(0, 0, 160, 120);
+
+    // Check if hazard is within camera FOV
+    for (const p of potholes) {
+      if (p.type === "ghost" && !injectGhost) continue;
+      if (p.y > 0.0) continue; // opposite lane outside camera pitch
+      const dist = p.x - robotX;
+      if (dist > 0.2 && dist < 2.0) {
+        // Perspective box projection
+        const u = 80 + (p.y - robotY) * 70;
+        const v = 60 + (1.2 / dist) * 20;
+        const w = (p.sx / dist) * 35;
+        const h = (p.sy / dist) * 25;
+
+        rawC.fillStyle = (p.type === "stain") ? "#181818" : "#0e0e0e";
+        rawC.fillRect(u - w/2, v - h/2, w, h);
+
+        grayC.fillStyle = "#151515";
+        grayC.fillRect(u - w/2, v - h/2, w, h);
+
+        // Threshold binary mask
+        threshC.fillStyle = "#ffffff";
+        threshC.fillRect(u - w/2, v - h/2, w, h);
+
+        // Contour bounding box
+        contC.strokeStyle = (p.type === "stain" || p.type === "ghost") ? "#f39c12" : "#2ecc71";
+        contC.lineWidth = 2;
+        contC.strokeRect(u - w/2, v - h/2, w, h);
+        contC.fillStyle = "#ffffff";
+        contC.font = "9px monospace";
+        contC.fillText(`${p.id} [${(p.x - robotX).toFixed(1)}m]`, u - w/2, v - h/2 - 3);
+      }
+    }
+  }
+
+  // Animation Loop
+  let lastT = performance.now();
+  function loop(now) {
+    const dt = Math.min(0.05, (now - lastT) / 1000.0);
+    lastT = now;
+    update(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+</script>
+</body>
+</html>

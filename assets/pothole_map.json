@@ -1,0 +1,107 @@
+{
+  "coordinate_system": "ENU",
+  "road": {
+    "x_min": -2.0,
+    "x_max": 22.0,
+    "y_min": -1.1,
+    "y_max": 1.1,
+    "asphalt_thickness": 0.06,
+    "pothole_depth": 0.035,
+    "lanes": {
+      "robot_lane": {
+        "y_center": -0.5,
+        "y_min": -1.05,
+        "y_max": -0.05
+      },
+      "other_lane": {
+        "y_center": 0.5,
+        "y_min": 0.05,
+        "y_max": 1.05
+      }
+    }
+  },
+  "potholes": [
+    {
+      "id": "pothole_1",
+      "type": "pothole",
+      "lane": "robot_lane",
+      "x": 4.0,
+      "y": -0.50,
+      "z": 0.0,
+      "length_x": 0.60,
+      "width_y": 0.50,
+      "depth_z": 0.035,
+      "must_detect": true,
+      "description": "First pothole in robot lane"
+    },
+    {
+      "id": "pothole_2",
+      "type": "pothole",
+      "lane": "robot_lane",
+      "x": 8.0,
+      "y": -0.55,
+      "z": 0.0,
+      "length_x": 0.60,
+      "width_y": 0.50,
+      "depth_z": 0.035,
+      "must_detect": true,
+      "description": "Second pothole in robot lane, slight offset"
+    },
+    {
+      "id": "pothole_3",
+      "type": "pothole",
+      "lane": "robot_lane",
+      "x": 12.5,
+      "y": -0.45,
+      "z": 0.0,
+      "length_x": 0.70,
+      "width_y": 0.50,
+      "depth_z": 0.035,
+      "must_detect": true,
+      "description": "Third pothole in robot lane, longer depression"
+    },
+    {
+      "id": "pothole_4",
+      "type": "pothole",
+      "lane": "other_lane",
+      "x": 6.0,
+      "y": 0.55,
+      "z": 0.0,
+      "length_x": 0.60,
+      "width_y": 0.50,
+      "depth_z": 0.035,
+      "must_detect": false,
+      "description": "Pothole in opposite lane; must be ignored by robot"
+    }
+  ],
+  "decoys": [
+    {
+      "id": "stain_1",
+      "type": "oil_stain",
+      "lane": "robot_lane",
+      "x": 10.0,
+      "y": -0.50,
+      "z": 0.06,
+      "length_x": 0.50,
+      "width_y": 0.40,
+      "is_physical_hole": false,
+      "must_detect": false,
+      "description": "Flat dark oil stain flush with road surface (decoy for camera mode)"
+    }
+  ],
+  "ghosts": [
+    {
+      "id": "ghost_1",
+      "type": "injected_ghost",
+      "lane": "robot_lane",
+      "x": 16.0,
+      "y": -0.50,
+      "z": 0.0,
+      "length_x": 0.60,
+      "width_y": 0.50,
+      "depth_z": 0.035,
+      "must_detect": false,
+      "description": "Phantom pothole injected via --inject-false for false-alarm testing"
+    }
+  ]
+}

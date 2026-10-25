@@ -1,0 +1,107 @@
+run_id,wall_time,sim_time_s,event,mode,pothole_id,est_x,est_y,robot_x,robot_y,robot_yaw,robot_state,distance_m,classification,note
+4948dc40,2026-10-26 01:19:03.540,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+4948dc40,2026-10-26 01:19:03.552,0.032,CLEAR_ROAD,sim,NA,NA,NA,0.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+d4129cca,2026-10-26 01:19:03.571,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+d4129cca,2026-10-26 01:19:03.573,0.032,CLEAR_ROAD,sim,NA,NA,NA,2.500,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+d4129cca,2026-10-26 01:19:03.584,1.184,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,2.961,-0.500,0.000,STOPPED_POTHOLE,0.589,TRUE_POSITIVE,Ground-truth simulation detection
+1b3a6cb6,2026-10-26 01:19:03.643,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.5, mode=sim)"
+1b3a6cb6,2026-10-26 01:19:03.643,0.032,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,3.000,-0.500,0.000,STOPPED_POTHOLE,0.550,TRUE_POSITIVE,Ground-truth simulation detection
+1b3a6cb6,2026-10-26 01:19:03.647,0.256,RESUME,sim,NA,NA,NA,3.000,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+1b3a6cb6,2026-10-26 01:19:03.647,0.256,CLEAR_ROAD,sim,NA,NA,NA,3.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.660,1.760,CLEAR_ROAD,sim,NA,NA,NA,3.752,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.676,3.264,CLEAR_ROAD,sim,NA,NA,NA,4.504,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.689,4.768,CLEAR_ROAD,sim,NA,NA,NA,5.256,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.702,6.272,CLEAR_ROAD,sim,NA,NA,NA,6.008,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.715,7.776,CLEAR_ROAD,sim,NA,NA,NA,6.760,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.724,8.160,POTHOLE_DETECTED,sim,pothole_2,8.000,-0.550,6.952,-0.500,0.000,STOPPED_POTHOLE,0.598,TRUE_POSITIVE,Ground-truth simulation detection
+1b3a6cb6,2026-10-26 01:19:03.726,8.384,RESUME,sim,NA,NA,NA,6.952,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+1b3a6cb6,2026-10-26 01:19:03.736,9.280,CLEAR_ROAD,sim,NA,NA,NA,7.400,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.751,10.784,CLEAR_ROAD,sim,NA,NA,NA,8.152,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.770,12.288,CLEAR_ROAD,sim,NA,NA,NA,8.904,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.783,13.792,CLEAR_ROAD,sim,NA,NA,NA,9.656,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.798,15.296,CLEAR_ROAD,sim,NA,NA,NA,10.408,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.809,16.800,CLEAR_ROAD,sim,NA,NA,NA,11.160,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+1b3a6cb6,2026-10-26 01:19:03.824,17.280,POTHOLE_DETECTED,sim,pothole_3,12.500,-0.450,11.400,-0.500,0.000,STOPPED_POTHOLE,0.600,TRUE_POSITIVE,Ground-truth simulation detection
+1b3a6cb6,2026-10-26 01:19:03.827,17.504,RESUME,sim,NA,NA,NA,11.400,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+239ab9c7,2026-10-26 01:19:03.836,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+239ab9c7,2026-10-26 01:19:03.837,0.032,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,3.000,-0.500,0.000,STOPPED_POTHOLE,0.550,TRUE_POSITIVE,Ground-truth simulation detection
+239ab9c7,2026-10-26 01:19:03.858,1.312,RESUME,sim,NA,NA,NA,3.000,-0.500,0.000,RESUMING,NA,NA,User manual resume
+239ab9c7,2026-10-26 01:19:03.859,1.312,CLEAR_ROAD,sim,NA,NA,NA,3.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4621b3c3,2026-10-26 01:19:03.883,0.000,RUN_START,off,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=off)"
+4621b3c3,2026-10-26 01:19:03.883,0.032,NOT_MONITORING,off,NA,NA,NA,0.000,-0.500,0.000,BLIND_DRIVING,NA,NA,Detection disabled with --blind override
+4f55ef71,2026-10-26 01:19:03.904,0.000,RUN_START,off,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=off)"
+4f55ef71,2026-10-26 01:19:03.904,0.032,DETECTION_UNAVAILABLE,off,NA,NA,NA,0.000,-0.500,0.000,DETECTION_OFF,NA,NA,Fail-safe stop: detection disabled or unavailable
+0104a3b7,2026-10-26 01:19:03.932,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+f082a1e3,2026-10-26 01:21:10.996,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+f082a1e3,2026-10-26 01:21:10.997,0.032,CLEAR_ROAD,sim,NA,NA,NA,0.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+c0475454,2026-10-26 01:21:11.015,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+c0475454,2026-10-26 01:21:11.016,0.032,CLEAR_ROAD,sim,NA,NA,NA,2.500,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+c0475454,2026-10-26 01:21:11.026,1.184,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,2.961,-0.500,0.000,STOPPED_POTHOLE,0.589,TRUE_POSITIVE,Ground-truth simulation detection
+6508b66b,2026-10-26 01:21:11.088,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.5, mode=sim)"
+6508b66b,2026-10-26 01:21:11.090,0.032,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,3.000,-0.500,0.000,STOPPED_POTHOLE,0.550,TRUE_POSITIVE,Ground-truth simulation detection
+6508b66b,2026-10-26 01:21:11.096,0.256,RESUME,sim,NA,NA,NA,3.000,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+6508b66b,2026-10-26 01:21:11.096,0.256,CLEAR_ROAD,sim,NA,NA,NA,3.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.154,1.760,CLEAR_ROAD,sim,NA,NA,NA,3.752,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.195,3.264,CLEAR_ROAD,sim,NA,NA,NA,4.504,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.211,4.768,CLEAR_ROAD,sim,NA,NA,NA,5.256,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.226,6.272,CLEAR_ROAD,sim,NA,NA,NA,6.008,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.241,7.776,CLEAR_ROAD,sim,NA,NA,NA,6.760,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.246,8.160,POTHOLE_DETECTED,sim,pothole_2,8.000,-0.550,6.952,-0.500,0.000,STOPPED_POTHOLE,0.598,TRUE_POSITIVE,Ground-truth simulation detection
+6508b66b,2026-10-26 01:21:11.249,8.384,RESUME,sim,NA,NA,NA,6.952,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+6508b66b,2026-10-26 01:21:11.261,9.280,CLEAR_ROAD,sim,NA,NA,NA,7.400,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.280,10.784,CLEAR_ROAD,sim,NA,NA,NA,8.152,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.294,12.288,CLEAR_ROAD,sim,NA,NA,NA,8.904,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.311,13.792,CLEAR_ROAD,sim,NA,NA,NA,9.656,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.325,15.296,CLEAR_ROAD,sim,NA,NA,NA,10.408,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.337,16.800,CLEAR_ROAD,sim,NA,NA,NA,11.160,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+6508b66b,2026-10-26 01:21:11.343,17.280,POTHOLE_DETECTED,sim,pothole_3,12.500,-0.450,11.400,-0.500,0.000,STOPPED_POTHOLE,0.600,TRUE_POSITIVE,Ground-truth simulation detection
+6508b66b,2026-10-26 01:21:11.347,17.504,RESUME,sim,NA,NA,NA,11.400,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.2s
+ea2effe8,2026-10-26 01:21:11.356,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+ea2effe8,2026-10-26 01:21:11.359,0.032,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,3.000,-0.500,0.000,STOPPED_POTHOLE,0.550,TRUE_POSITIVE,Ground-truth simulation detection
+ea2effe8,2026-10-26 01:21:11.377,1.312,RESUME,sim,NA,NA,NA,3.000,-0.500,0.000,RESUMING,NA,NA,User manual resume
+ea2effe8,2026-10-26 01:21:11.378,1.312,CLEAR_ROAD,sim,NA,NA,NA,3.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+ea2effe8,2026-10-26 01:21:11.396,2.816,CLEAR_ROAD,sim,NA,NA,NA,3.602,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+cc3c3fa4,2026-10-26 01:21:11.414,0.000,RUN_START,off,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=off)"
+cc3c3fa4,2026-10-26 01:21:11.415,0.032,NOT_MONITORING,off,NA,NA,NA,0.000,-0.500,0.000,BLIND_DRIVING,NA,NA,Detection disabled with --blind override
+a074dfba,2026-10-26 01:21:11.435,0.000,RUN_START,off,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=off)"
+a074dfba,2026-10-26 01:21:11.437,0.032,DETECTION_UNAVAILABLE,off,NA,NA,NA,0.000,-0.500,0.000,DETECTION_OFF,NA,NA,Fail-safe stop: detection disabled or unavailable
+c340fa04,2026-10-26 01:21:11.476,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=sim)"
+c340fa04,2026-10-26 01:21:11.477,0.032,CLEAR_ROAD,sim,NA,NA,NA,0.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:33.971,0.000,RUN_START,sim,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.5, mode=sim)"
+4525dd9e,2026-10-26 01:21:33.973,0.032,CLEAR_ROAD,sim,NA,NA,NA,0.000,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:33.985,1.536,CLEAR_ROAD,sim,NA,NA,NA,0.752,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:33.997,3.040,CLEAR_ROAD,sim,NA,NA,NA,1.504,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.010,4.544,CLEAR_ROAD,sim,NA,NA,NA,2.256,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.020,5.952,POTHOLE_DETECTED,sim,pothole_1,4.000,-0.500,2.960,-0.500,0.000,STOPPED_POTHOLE,0.590,TRUE_POSITIVE,Ground-truth simulation detection
+4525dd9e,2026-10-26 01:21:34.023,6.272,RESUME,sim,NA,NA,NA,2.960,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.3s
+4525dd9e,2026-10-26 01:21:34.024,6.272,CLEAR_ROAD,sim,NA,NA,NA,2.960,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.039,7.776,CLEAR_ROAD,sim,NA,NA,NA,3.712,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.051,9.280,CLEAR_ROAD,sim,NA,NA,NA,4.464,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.062,10.784,CLEAR_ROAD,sim,NA,NA,NA,5.216,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.072,12.288,CLEAR_ROAD,sim,NA,NA,NA,5.968,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.087,13.792,CLEAR_ROAD,sim,NA,NA,NA,6.720,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.091,14.272,POTHOLE_DETECTED,sim,pothole_2,8.000,-0.550,6.960,-0.500,0.000,STOPPED_POTHOLE,0.590,TRUE_POSITIVE,Ground-truth simulation detection
+4525dd9e,2026-10-26 01:21:34.095,14.592,RESUME,sim,NA,NA,NA,6.960,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.3s
+4525dd9e,2026-10-26 01:21:34.101,15.296,CLEAR_ROAD,sim,NA,NA,NA,7.312,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.119,16.800,CLEAR_ROAD,sim,NA,NA,NA,8.064,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.130,18.304,CLEAR_ROAD,sim,NA,NA,NA,8.816,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.142,19.808,CLEAR_ROAD,sim,NA,NA,NA,9.568,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.161,21.312,CLEAR_ROAD,sim,NA,NA,NA,10.320,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.173,22.816,CLEAR_ROAD,sim,NA,NA,NA,11.072,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.179,23.488,POTHOLE_DETECTED,sim,pothole_3,12.500,-0.450,11.408,-0.500,0.000,STOPPED_POTHOLE,0.592,TRUE_POSITIVE,Ground-truth simulation detection
+4525dd9e,2026-10-26 01:21:34.183,23.808,RESUME,sim,NA,NA,NA,11.408,-0.500,0.000,RESUMING,NA,NA,Auto resume after 0.3s
+4525dd9e,2026-10-26 01:21:34.186,24.320,CLEAR_ROAD,sim,NA,NA,NA,11.664,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.201,25.824,CLEAR_ROAD,sim,NA,NA,NA,12.416,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.211,27.328,CLEAR_ROAD,sim,NA,NA,NA,13.168,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.223,28.832,CLEAR_ROAD,sim,NA,NA,NA,13.920,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.233,30.336,CLEAR_ROAD,sim,NA,NA,NA,14.672,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.242,31.840,CLEAR_ROAD,sim,NA,NA,NA,15.424,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.252,33.344,CLEAR_ROAD,sim,NA,NA,NA,16.176,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.261,34.848,CLEAR_ROAD,sim,NA,NA,NA,16.928,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.273,36.352,CLEAR_ROAD,sim,NA,NA,NA,17.680,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.290,37.856,CLEAR_ROAD,sim,NA,NA,NA,18.432,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.302,39.360,CLEAR_ROAD,sim,NA,NA,NA,19.184,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.313,40.864,CLEAR_ROAD,sim,NA,NA,NA,19.936,-0.500,0.000,RUNNING,NA,NA,"Road clear, cruising within lane corridor"
+4525dd9e,2026-10-26 01:21:34.315,41.024,RUN_FINISHED,sim,NA,NA,NA,20.016,-0.500,0.000,FINISHED,NA,NA,Destination reached at x=20.02m
+a28e2389,2026-10-26 01:22:23.891,0.000,RUN_START,off,NA,NA,NA,NA,NA,NA,RUNNING,NA,NA,"Controller started (speed=0.4, mode=off)"
+a28e2389,2026-10-26 01:22:23.892,0.032,DETECTION_UNAVAILABLE,off,NA,NA,NA,0.000,-0.500,0.000,DETECTION_OFF,NA,NA,Fail-safe stop: detection disabled or unavailable

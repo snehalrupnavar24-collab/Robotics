@@ -1,0 +1,151 @@
+#VRML_SIM R2025a utf-8
+# license: Apache License 2.0
+# Pothole PROTO representing a physical road depression with dark floor, dark wall liners, and rubble fragments
+
+PROTO Pothole [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation    0 0 1 0
+  field SFString   name        "pothole"
+  field SFFloat    sizeX       0.6
+  field SFFloat    sizeY       0.5
+  field SFFloat    depth       0.035
+]
+{
+  %<
+    let sx = fields.sizeX.value;
+    let sy = fields.sizeY.value;
+    let d = fields.depth.value;
+    let wallThick = 0.015;
+  >%
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    children [
+      # Recessed dark pit floor
+      Transform {
+        translation 0 0 %<= -d / 2.0 >%
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.03 0.03 0.03
+              roughness 0.95
+              metalness 0.0
+            }
+            geometry Box {
+              size %<= sx - 2 * wallThick >% %<= sy - 2 * wallThick >% 0.004
+            }
+          }
+        ]
+      }
+      # Dark wall liner: Front wall (+x)
+      Transform {
+        translation %<= (sx / 2.0) - (wallThick / 2.0) >% 0 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.05 0.05 0.05
+              roughness 0.9
+            }
+            geometry Box {
+              size %<= wallThick >% %<= sy >% %<= d >%
+            }
+          }
+        ]
+      }
+      # Dark wall liner: Rear wall (-x)
+      Transform {
+        translation %<= -(sx / 2.0) + (wallThick / 2.0) >% 0 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.05 0.05 0.05
+              roughness 0.9
+            }
+            geometry Box {
+              size %<= wallThick >% %<= sy >% %<= d >%
+            }
+          }
+        ]
+      }
+      # Dark wall liner: Left wall (+y)
+      Transform {
+        translation 0 %<= (sy / 2.0) - (wallThick / 2.0) >% 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.05 0.05 0.05
+              roughness 0.9
+            }
+            geometry Box {
+              size %<= sx >% %<= wallThick >% %<= d >%
+            }
+          }
+        ]
+      }
+      # Dark wall liner: Right wall (-y)
+      Transform {
+        translation 0 %<= -(sy / 2.0) + (wallThick / 2.0) >% 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.05 0.05 0.05
+              roughness 0.9
+            }
+            geometry Box {
+              size %<= sx >% %<= wallThick >% %<= d >%
+            }
+          }
+        ]
+      }
+      # Rubble fragment 1 (small asphalt chunk)
+      Transform {
+        translation %<= sx * 0.15 >% %<= -sy * 0.15 >% %<= -d / 2.0 + 0.006 >%
+        rotation 0 0 1 0.4
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.12 0.12 0.12
+              roughness 0.8
+            }
+            geometry Box {
+              size 0.04 0.03 0.012
+            }
+          }
+        ]
+      }
+      # Rubble fragment 2 (crushed aggregate)
+      Transform {
+        translation %<= -sx * 0.20 >% %<= sy * 0.10 >% %<= -d / 2.0 + 0.005 >%
+        rotation 0 0 1 -0.6
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.18 0.17 0.16
+              roughness 0.9
+            }
+            geometry Box {
+              size 0.035 0.035 0.010
+            }
+          }
+        ]
+      }
+      # Rubble fragment 3 (small pebble)
+      Transform {
+        translation %<= sx * 0.05 >% %<= sy * 0.20 >% %<= -d / 2.0 + 0.004 >%
+        rotation 0 0 1 1.1
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.15 0.15 0.15
+              roughness 0.85
+            }
+            geometry Box {
+              size 0.025 0.025 0.008
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
